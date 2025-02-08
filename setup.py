@@ -15,7 +15,7 @@ def get_requirements(file_path: str) -> List[str]:
             requirements.append(line.strip())
 
 setup(
-    name='document_processor',
+    name='document_processing_system',
     version='0.0.1',
     author='ravikumar',
     author_email='chavvaravikumarreddy2004@gmail.com',

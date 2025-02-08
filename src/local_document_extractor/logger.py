@@ -1,7 +1,7 @@
 import logging
 import sys
 sys.path.append("../..")
-from config.configs import ROOT_DIR
+from config.purpose.configs import ROOT_DIR
 from datetime import datetime
 
 # Path to the log file
