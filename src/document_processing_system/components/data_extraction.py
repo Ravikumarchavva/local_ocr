@@ -1,5 +1,5 @@
 from tqdm.auto import tqdm
-from data_ingestion import DataIngestion
+from document_processing_system.components.data_ingestion import DataIngestion
 
 class DataExtraction:
     def __init__(self, data_ingestion):
