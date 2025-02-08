@@ -1,0 +1,11 @@
+python-dotenv
+fastapi
+uvicorn
+python-multipart
+transformers
+
+# Optional
+ipython
+json2html
+
+-e .
