@@ -9,3 +9,7 @@ DATA_DIR = ROOT_DIR / "data"
 SRC_DIR = ROOT_DIR / "src"
 TEST_DIR = ROOT_DIR / "test"
 DOCS_DIR = ROOT_DIR / "docs"
+
+if __name__ == '__main__':
+    print(CONFIG_DIR)
+    
