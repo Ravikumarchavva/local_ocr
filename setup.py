@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from typing import List
 
-HYPHEN_E_DOT = '-e .'
+HYPHEN_E_DOT = "-e ."
 
 def get_requirements(file_path: str) -> List[str]:
     '''
@@ -14,12 +14,14 @@ def get_requirements(file_path: str) -> List[str]:
                 continue
             requirements.append(line.strip())
 
+    return requirements
+
 setup(
-    name='document_processing_system',
-    version='0.0.1',
-    author='ravikumar',
-    author_email='chavvaravikumarreddy2004@gmail.com',
-    packages=find_packages(),
-    install_requires=get_requirements('requirements.txt'),
-    setup_requires=['setuptools>=64'],
+    name="document_processing_system",
+    version="0.0.1",
+    author="ravikumar",
+    author_email="chavvaravikumarreddy2004@gmail.com",
+    packages=find_packages(include=["document_processing_system", "config"]),
+    install_requires=get_requirements("requirements.txt"),
+    setup_requires=["setuptools>=64"],
 )
