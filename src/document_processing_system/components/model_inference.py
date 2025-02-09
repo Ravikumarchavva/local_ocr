@@ -5,7 +5,7 @@ import logging  # added logging import
 from tqdm.auto import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, pipeline  # added pipeline
 from utils.post_processing import extract_json_objects
-from config.purpose.dps_qc_report_config import get_qc_prompt
+from config.purpose.dps_qc_report_config import get_qc_prompt, MAX_MODEL_TOKENS  # imported new constant
 from config.settings import DATA_DIR
 
 logging.basicConfig(level=logging.INFO)  # basic configuration
@@ -35,7 +35,8 @@ class ModelInference:
             "text-generation",
             model=self.model,
             tokenizer=self.tokenizer,
-            device_map="auto"
+            device_map="auto",
+            max_new_tokens=MAX_MODEL_TOKENS  # applied max tokens from config
         )
         
         logging.info("Model loaded successfully!")  # replaced print
