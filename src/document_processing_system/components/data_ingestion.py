@@ -1,10 +1,11 @@
 from config.settings import DATA_DIR
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class DataIngestion:
     file_name: str
+    file_path: str = field(init=False)   # added type annotation for file_path
 
     def __post_init__(self):
         self.update_file_path(self.file_name)
