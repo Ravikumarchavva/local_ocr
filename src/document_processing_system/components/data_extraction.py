@@ -1,13 +1,13 @@
 from tqdm.auto import tqdm
 from document_processing_system.components.data_ingestion import DataIngestion
-
+import re
 class DataExtraction:
-    def __init__(self, data_ingestion):
-        self.data_ingestion = data_ingestion
+    def __init__(self, data_ingester):
+        self.data_ingester = data_ingester
 
     def extract_data(self):
         import pdfplumber
-        with pdfplumber.open(self.data_ingestion.file_path) as pdf:
+        with pdfplumber.open(self.data_ingester.file_path) as pdf:
             pages = []
             tables = []
             images = []
@@ -18,12 +18,22 @@ class DataExtraction:
                 images.append(page.images)
         return pages, tables, images
 
-    def display_data(self, data):
+    @staticmethod
+    def display_data(data):
         for page in data:
             print(page)
 
+    @staticmethod
+    def filter_pages(pages):
+        filtered_pages = []
+        for page in tqdm(pages, desc="Filtering pages", unit="pages"):
+            boxes_inpected = re.search(r'Expected Qty', page, re.DOTALL)
+            if boxes_inpected:
+                filtered_pages.append(page)
+        return filtered_pages
+
 if __name__ == '__main__':
-    data_ingestion = DataIngestion('qc_data/qc_templates/PO166939-204865.pdf')
-    data_extractor = DataExtraction(data_ingestion)
+    data_ingester = DataIngestion('qc_data/qc_templates/PO166939-204865.pdf')
+    data_extractor = DataExtraction(data_ingester)
     pages, tables, images = data_extractor.extract_data()
     data_extractor.display_data(pages)
