@@ -25,7 +25,7 @@ class ModelInference:
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
             device_map="auto",
-            quantization_config=bnb_config
+            quantization_config=bnb_config,
         ).to(self.device)
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
@@ -57,6 +57,9 @@ class ModelInference:
         json_response = extract_json_objects(response)
 
         return json_response
+    
+    def get_prompt(self, item):
+        return get_qc_prompt(item)
 
     def process_items(self, items, output_folder=None):
         """Processes a list of extracted items and saves JSON output for each."""
