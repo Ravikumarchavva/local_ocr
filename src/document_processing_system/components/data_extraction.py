@@ -27,8 +27,8 @@ class DataExtraction:
     def filter_pages(pages):
         filtered_pages = []
         for page in tqdm(pages, desc="Filtering pages", unit="pages"):
-            boxes_inpected = re.search(r'Expected Qty', page, re.DOTALL)
-            if boxes_inpected:
+            items = re.search(r'Expected Qty', page, re.DOTALL)
+            if items:
                 filtered_pages.append(page)
         return filtered_pages
 
