@@ -5,17 +5,39 @@ os.chdir(SRC_DIR)
 from document_processing_system.components.data_ingestion import DataIngestion
 from document_processing_system.components.data_extraction import DataExtraction
 
-data_ingester = DataIngestion('qc_data/qc_templates/PO 177692 - PO 221421.pdf')
-data_extractor = DataExtraction(data_ingester)
-pages, tables, images = data_extractor.extract_data()
-all_items = data_extractor.filter_pages(pages)
+pdf = 'PO166939-204865'
 
+data_ingester = DataIngestion(f'qc_data/qc_templates/{pdf}.pdf')
+data_extracter = DataExtraction(data_ingester)
+pages, tables, images = data_extracter.extract_data()
+all_items = data_extracter.filter_pages(pages)
+
+import os
 from document_processing_system.components.model_inference import ModelInference
-model = ModelInference()
-response = model.process_items(all_items)
+from config.settings import DATA_DIR
 
-import pandas as pd
+# Define the PDF folder path
+pdf_folder = os.path.join(DATA_DIR, 'qc_data', 'qc_reports_output', pdf, 'qc_reports_14b')
+
+# Ensure the directory exists
+os.makedirs(pdf_folder, exist_ok=True)
+
+# Initialize the model
+model = ModelInference(model_name="Qwen/Qwen2.5-14B")
+
+response = model.process_items(all_items, output_folder=pdf_folder)
+
+import polars as pl
 flat_data = [item for sublist in response for item in sublist]
 
-data = pd.DataFrame(flat_data)
-print(data)
+data = pl.DataFrame(flat_data)
+
+output_folder = os.path.join(DATA_DIR, 'qc_data', 'qc_reports_output', pdf, 'pdf_data')
+
+
+data.write_excel(f"{output_folder}/data.xlsx")
+
+import json
+
+with open(f'{output_folder}/output.json', "w", encoding="utf-8") as json_file:
+    json.dump(flat_data, json_file, indent=4, ensure_ascii=False)

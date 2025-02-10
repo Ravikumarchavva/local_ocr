@@ -72,9 +72,4 @@ def get_qc_prompt(text):
 
     full_prompt = f"{report_prompt}{text}"
 
-    # # Truncate the prompt if it exceeds the maximum token limit
-    # if len(full_prompt) > MAX_MODEL_TOKENS:
-    #     truncated_text = text[:MAX_MODEL_TOKENS - len(report_prompt) - 10]  # Leave some buffer
-    #     full_prompt = f"{report_prompt}{truncated_text}"
-
     return full_prompt
