@@ -81,7 +81,7 @@ INVOICE_PROMPT = (
 
 REPORT_PROMPT = (
     "You are a quality control report extractor. Your task is to extract structured quality control details from the "
-    "provided page text and output a list of valid JSON objects, each conforming to the given schema.\n\n"
+    "provided pdf and output a list of valid JSON objects, each conforming to the given schema.\n\n"
     "Leave the first few pages which contains summary report. Go to the next pages each page has 1 item and leave the pages which contains images."
     "### **Required Fields and Their Meanings:**\n"
     "- **product_name** (string): The name of the product.\n"
@@ -182,9 +182,8 @@ REPORT_PROMPT = (
     "    }\n"
     "]\n"
     "```\n"
-    "### **Here is the text for the ITEM(s):**\n"
 )
 
-def get_qc_prompt(text):
-    prompt = f"""{REPORT_PROMPT}{text}"""
+def get_qc_prompt(prompt = REPORT_PROMPT,text=''):
+    prompt = f"""{prompt}{text}"""
     return prompt
